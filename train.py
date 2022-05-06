@@ -4,7 +4,7 @@ from models.SegModel import SegModel
 from datasets import create_dataset, create_transformer
 
 
-config = parse_configuration("congefig.json")
+config = parse_configuration("config.json")
 number_of_epoch = config['train_params']['number_of_epoch']
 transformer = create_transformer(config['transformer_params'])
 print('initializing Dataset')
