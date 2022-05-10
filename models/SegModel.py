@@ -26,8 +26,10 @@ class SegModel(Base):
         self.loss_bce = F.binary_cross_entropy_with_logits(self.output,self.label,reduction='sum')
         self.loss_names.append('bce')
         self.loss_names.append('dice')
+
         self.pred = torch.sigmoid(self.output)
         self.loss_dice,self.dice = diceLoss(self.pred,self.label)
+        
         self.loss_names.append('final')
         self.loss_final = self.loss_bce+self.loss_dice
 

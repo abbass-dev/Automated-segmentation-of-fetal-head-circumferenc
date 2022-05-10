@@ -89,13 +89,13 @@ class Base(ABC):
                     'model_state_dict': model.state_dict(),
                 },f=path)
         
-    def load_models(self,path):
+    def load_models(self,path,map_location):
         """save models to the disk"""
         for model_name in self.network_names:
             if isinstance(model_name,str):
                 model = getattr(self,'net'+model_name)
-                checkpoint = torch.load(path+"/net"+model_name+".pt")
-                model.load_state_dict(checkpoint['model_state_dict'])
+                checkpoint = torch.load(path+"/net"+model_name+".pt",map_location=map_location)
+                model.load_state_dict(checkpoint['model_state_dict'],)
 
 
 
