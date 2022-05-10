@@ -28,9 +28,6 @@ class SegModel(Base):
 
         self.loss_names.append('dice')
         self.pred = torch.sigmoid(self.output)
-        zeros = torch.zeros_like(self.pred)
-        zeros[self.pred > 0.5] = 1
-        self.pred = zeros
         self.loss_dice,self.dice = diceLoss(self.pred,self.label)
 
         self.loss_names.append('final')
