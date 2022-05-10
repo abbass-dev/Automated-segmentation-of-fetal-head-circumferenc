@@ -21,6 +21,7 @@ class SegModel(Base):
   
     def forward(self):
         self.output = self.netSeg(self.input)
+        return self.output
 
     def backward(self):
         self.loss_bce = F.binary_cross_entropy_with_logits(self.output,self.label,reduction='sum')
@@ -29,7 +30,7 @@ class SegModel(Base):
 
         self.pred = torch.sigmoid(self.output)
         self.loss_dice,self.dice = diceLoss(self.pred,self.label)
-        
+
         self.loss_names.append('final')
         self.loss_final = self.loss_bce+self.loss_dice
 

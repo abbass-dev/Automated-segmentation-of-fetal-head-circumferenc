@@ -32,7 +32,7 @@ class FetalData(Dataset):
             image = dic['image']
             annot = dic['mask']
         annot[annot>0]=1
-        return to_tensor(image),to_tensor(annot)
+        return to_tensor(image),to_tensor(annot)*255
         
 if __name__ =='__main__':
     path2train = 'data/training_set'
