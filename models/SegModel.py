@@ -29,13 +29,9 @@ class SegModel(Base):
         self.loss_names.append('dice')
         self.pred = torch.sigmoid(self.output)
         self.loss_dice,self.dice = diceLoss(self.pred,self.label)
-
         self.loss_names.append('final')
         self.loss_final = self.loss_bce+self.loss_dice
 
-        
-
-        #self.loss_dice = diceLoss(self.output,self.label)
 
     def optimize_parameters(self):
         self.loss_final.backward()
