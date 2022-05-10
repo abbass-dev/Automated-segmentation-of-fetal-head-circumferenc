@@ -10,16 +10,15 @@ from losses import diceLoss
 class SegModel(Base):
     def __init__(self,params):
         super(SegModel,self).__init__()
-        
         self.network_names =[]
         self.loss_names= []
         self.optimizers = []
-        self.netSeg = SegementaionNet(params)
+        self.netSeg = SegementaionNet(params).to(self.device)
         self.network_names.append('Seg')
         self.opt = Adam(self.netSeg.parameters(),lr=0.001)
         self.optimizers.append(self.opt)
         self.schedulers.append(StepLR(self.opt,step_size=10, gamma=0.3))
-        self.move_models_to_device()
+        #self.move_models_to_device()
   
     def forward(self):
         self.output = self.netSeg(self.input)
