@@ -30,6 +30,7 @@
         "lr_decay_iters": 10
     },
     "model_params":{
+        "save_folder":"saved_models",
         "input_shape" : [1,128,192],
         "initial_filter" : 16,
         "num_outputs": 3

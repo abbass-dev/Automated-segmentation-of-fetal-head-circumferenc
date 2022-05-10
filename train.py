@@ -22,5 +22,6 @@ for epoch in range(number_of_epoch):
         model.backward()
         model.optimize_parameters()
         running_loss += model.get_current_losses()['final'].item()
+        model.save_models("saved_models")
     print(running_loss/data_size)    
     model.update_learning_rate()
