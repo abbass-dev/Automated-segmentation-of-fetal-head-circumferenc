@@ -18,7 +18,6 @@ class SegModel(Base):
         self.opt = Adam(self.netSeg.parameters(),lr=0.001)
         self.optimizers.append(self.opt)
         self.schedulers.append(StepLR(self.opt,step_size=10, gamma=0.3))
-        #self.move_models_to_device()
   
     def forward(self):
         self.output = self.netSeg(self.input)
