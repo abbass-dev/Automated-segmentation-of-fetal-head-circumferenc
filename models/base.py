@@ -41,14 +41,14 @@ class Base(ABC):
             if isinstance(net,str):
                 net = getattr(self,'net'+net)
                 net.train()
-                
+
     def test(self):
         #sets models parameters in testing mode
         for net in self.network_names:
             if isinstance(net,str):
                 net = getattr(self,'net'+net)
                 net.eval()
-    
+                
     @abstractmethod
     def forward(self):
         """run forwad pass on pre-set data in self.inputs ;called in every training iteration"""
