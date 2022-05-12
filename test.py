@@ -18,9 +18,14 @@ model = SegModel(config['model_params'])
 model.load_models(models_path,map_location=torch.device('cpu'))
 itr = iter(train)
 next(itr)
+next(itr)
+
 image,annot = next(itr)
 model.test()
 model.set_input((image,annot))
 
-pred = model.forward()
-pred = torch.sigmoid(pred[0,0])
+pred = model.forward().detach()
+pred = torch.sigmoid(pred[0,0])*255
+
+cv2.imshow("",pred.numpy())
+cv2.waitKey(0)
