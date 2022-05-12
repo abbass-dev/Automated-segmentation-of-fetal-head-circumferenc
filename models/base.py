@@ -48,7 +48,7 @@ class Base(ABC):
             if isinstance(net,str):
                 net = getattr(self,'net'+net)
                 net.eval()
-                
+
     @abstractmethod
     def forward(self):
         """run forwad pass on pre-set data in self.inputs ;called in every training iteration"""
@@ -89,7 +89,7 @@ class Base(ABC):
                 torch.save({
                     'model_state_dict': model.state_dict(),
                 },f=path)
-        
+                
     def load_models(self,path,map_location):
         """save models to the disk"""
         for model_name in self.network_names:

@@ -16,19 +16,12 @@ print(number_of_epoch)
 print('initializing fsModel')
 model = SegModel(config['model_params'])
 model.load_models(models_path,map_location=torch.device('cpu'))
-itr = iter(train)
-next(itr)
-next(itr)
-"""
-image,annot = next(itr)
-model.test()
-model.set_input((image,annot))
 
-pred = model.forward().detach()
-pred = torch.sigmoid(pred[0,0])*255
-
-cv2.imshow("",pred.numpy())
-cv2.waitKey(0)"""
-model.test()
-seg = getattr(model,"netSeg")
-print(list(seg.parameters())[0])
+c=0
+for v in val:
+    c+=1
+    model.set_input(v)
+    model.test()
+    if c>2:
+        break
+print(torch.cat(model.return_tested(),dim=0).shape)

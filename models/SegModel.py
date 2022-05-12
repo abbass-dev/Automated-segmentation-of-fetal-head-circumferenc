@@ -18,6 +18,13 @@ class SegModel(Base):
         self.opt = Adam(self.netSeg.parameters(),lr=0.001)
         self.optimizers.append(self.opt)
         self.schedulers.append(StepLR(self.opt,step_size=10, gamma=0.3))
+        self.accuracy = 0
+        self.accuracy_history = []
+
+        # storing predictions and labels for validation
+        self.val_predictions = []
+        self.val_labels = []
+        self.val_images = []
   
     def forward(self):
         self.output = self.netSeg(self.input)
@@ -29,8 +36,7 @@ class SegModel(Base):
         self.loss_names.append('dice')
 
         self.pred = torch.sigmoid(self.output)
-        self.loss_dice,self.dice = diceLoss(self.pred,self.label)
-
+        self.loss_dice,self.metric = diceLoss(self.pred,self.label)
         self.loss_names.append('final')
         self.loss_final = self.loss_bce+self.loss_dice
 
@@ -38,4 +44,19 @@ class SegModel(Base):
         self.loss_final.backward()
         self.opt.step()
         self.opt.zero_grad()
+
+    def test(self):
+        super().test()
+        with torch.no_grad():
+            self.forward()
+       #print(self.input[0].shape)
+        print(self.input.shape)
+        print(self.output.shape)
+        self.val_predictions.append(self.output)
+        self.val_images.append(self.input)
+        self.val_labels.append(self.label)
+    
+    def return_tested(self):
+        return self.val_labels
+
        
