@@ -24,4 +24,5 @@ for v in val:
     model.test()
     if c>2:
         break
-print(torch.cat(model.return_tested(),dim=0).shape)
+
+print(model.accu())

@@ -1,8 +1,10 @@
 from pyexpat import model
+
+from sklearn.metrics import accuracy_score
 from utils import parse_configuration
 from models.SegModel import SegModel
 from datasets import create_dataset, create_transformer
-
+from matplotlib import pyplot as plt
 
 config = parse_configuration("config.json")
 number_of_epoch = config['train_params']['number_of_epoch']
@@ -22,6 +24,14 @@ for epoch in range(number_of_epoch):
         model.backward()
         model.optimize_parameters()
         running_loss += model.get_current_losses()['final'].item()
-        model.save_models("saved_models")
-    print(running_loss/data_size)    
-    model.update_learning_rate()
+        
+model.post_epoch_callback()
+loss_histoy , accuracy_history = model.get_training_history()
+
+plt.plot(loss_histoy)
+plt.plot(accuracy_history)
+plt.title('training history')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['loss', 'accu'], loc='upper left')
+plt.show()

@@ -24,8 +24,6 @@
     "train_params": {
         "number_of_epoch": 100,
         "lr": 0.001,
-        "export_path": "",
-        "checkpoint_path": "",
         "lr_policy": "step",
         "lr_decay_iters": 10
     },
